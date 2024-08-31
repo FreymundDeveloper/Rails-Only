@@ -23,4 +23,10 @@ Things you may want to cover:
 
 * ...
 
+**For documentation**
+
 docker-compose up --build
+
+docker-compose exec web rails <"command">
+
+You need to perform the "bundle install" manually in the container terminal(in addition to the editor terminal), use: "docker-compose exec web /bin/bash"
