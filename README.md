@@ -29,4 +29,6 @@ docker-compose up --build
 
 docker-compose exec web rails <"command">
 
+In the container, install apt-get install curl
+
 You need to perform the "bundle install" manually in the container terminal(in addition to the editor terminal), use: "docker-compose exec web /bin/bash"
