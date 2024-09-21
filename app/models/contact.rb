@@ -12,6 +12,18 @@ class Contact < ApplicationRecord
     #    super(root: true, methods: [:kind_description, :author])
     #end
 
+    def local_setting(birthdate)
+        I18n.l(birthdate) unless birthdate.blank?
+    end
+
+    def to_locale
+        { 
+            name: self.name, 
+            email: self.email,
+            birthdate: local_setting(self.birthdate)
+        }
+    end
+
     def i18n_default
         I18n.default_locale
     end
