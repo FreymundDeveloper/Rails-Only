@@ -11,4 +11,8 @@ class Contact < ApplicationRecord
     #def as_json(options={})
     #    super(root: true, methods: [:kind_description, :author])
     #end
+
+    def i18n_default
+        I18n.default_locale
+    end
 end
