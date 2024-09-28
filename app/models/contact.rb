@@ -25,6 +25,12 @@ class Contact < ApplicationRecord
         }
     end
 
+    def as_json(options={})
+        h = super(options)
+        h[:birthdate] = local_setting(self.birthdate)
+        h
+    end
+
     def i18n_default
         I18n.default_locale
     end
