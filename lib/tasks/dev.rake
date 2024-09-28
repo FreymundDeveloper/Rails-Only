@@ -10,6 +10,8 @@ namespace :dev do
     
     puts "Contacts Type populated with success!"
 
+    ###
+
     puts "Generating Contacts..."
     
     100.times do |i|
@@ -22,5 +24,18 @@ namespace :dev do
     end
     
     puts "Contacts populated with success!"
+
+    ###
+
+    puts "Generating Phones..."
+    
+    Contact.all.each do |contact|
+      Random.rand(5).times do |i|
+        phone = Phone.create!(number:Faker::PhoneNumber.cell_phone, contact: contact)
+      end
+    end
+    
+    puts "Phones populated with success!"
+
   end
 end
