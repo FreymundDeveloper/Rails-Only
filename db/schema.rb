@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_28_070136) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_05_064635) do
+  create_table "addresses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "street"
+    t.string "city"
+    t.bigint "contact_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contact_id"], name: "index_addresses_on_contact_id"
+  end
+
   create_table "contacts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -35,6 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_28_070136) do
     t.index ["contact_id"], name: "index_phones_on_contact_id"
   end
 
+  add_foreign_key "addresses", "contacts"
   add_foreign_key "contacts", "kinds"
   add_foreign_key "phones", "contacts"
 end
