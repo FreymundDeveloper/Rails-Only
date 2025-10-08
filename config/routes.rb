@@ -6,9 +6,11 @@ Rails.application.routes.draw do
 
     resource :phones, only: [:show]
     resource :phones, only: [:show], path: "relationships/phones"
+    resource :phone, only: [:update, :create, :destroy]
+    resource :phone, only: [:update, :create, :destroy], path: "relationships/phones"
 
-    resource :address, only: [:show]
-    resource :address, only: [:show], path: "relationships/address"
+    resource :address, only: [:show, :update, :create, :destroy]
+    resource :address, only: [:show, :update, :create, :destroy], path: "relationships/address"
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
