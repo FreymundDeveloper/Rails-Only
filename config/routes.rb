@@ -4,8 +4,11 @@ Rails.application.routes.draw do
   # resource :auths, only: [:create]
   resources :kinds
 
+  # versionist config options
   # :parameter => {:name => "version", :value => "1"}
-  api_version(:module => "v1", :header => {:name => "X-Version", :value => "1.0"}) do
+  # api_version(:module => "v1", :header => {:name => "X-Version", :value => "1.0"}) do
+  
+  api_version(:module => "v1", :path => {:value => "v1"}) do
     resources :contacts do
       resource :kind, only: [:show]
       resource :kind, only: [:show], path: "relationships/kind"
@@ -20,7 +23,7 @@ Rails.application.routes.draw do
     end
   end
 
-  api_version(:module => "v2", :header => {:name => "X-Version", :value => "2.0"}) do
+  api_version(:module => "v2", :path => {:value => "v2"}) do
     resources :contacts do
       resource :kind, only: [:show]
       resource :kind, only: [:show], path: "relationships/kind"
@@ -34,6 +37,12 @@ Rails.application.routes.draw do
       resource :address, only: [:show, :update, :create, :destroy], path: "relationships/address"
     end
   end
+
+  # Subdomain manipulation
+  # constraints subdomain: "v1" do
+  # scope module: "v1" do
+  # end
+  # end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
