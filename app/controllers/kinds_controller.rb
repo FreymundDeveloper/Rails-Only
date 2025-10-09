@@ -2,7 +2,7 @@ class KindsController < ApplicationController
   # include ActionController::HttpAuthentication::Basic::ControllerMethods
   # http_basic_authenticate_with name: "fd", password: "secret"
 
-  TOKEN = "secret1"
+  # TOKEN = "secret1"
 
   # include ActionController::HttpAuthentication::Digest::ControllerMethods
   # USERS = { "fd" => Digest::MD5.hexdigest(["fd","Application","secret"].join(":")) }
@@ -71,10 +71,14 @@ class KindsController < ApplicationController
       # end
 
       authenticate_or_request_with_http_token do |token, options|
-        ActiveSupport::SecurityUtils.secure_compare(
-          ::Digest::SHA256.hexdigest(token),
-          ::Digest::SHA256.hexdigest(TOKEN)
-        )
+        hmac_secret = "my$ecretK3y"
+
+        JWT.decode token, hmac_secret, true, { :algorithm => "HS256" }
+        
+        #ActiveSupport::SecurityUtils.secure_compare(
+        #  ::Digest::SHA256.hexdigest(token),
+        #  ::Digest::SHA256.hexdigest(TOKEN)
+        #)
       end
     end
 end

@@ -13,6 +13,9 @@ gem "mysql2", "~> 0.5"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 
+# A pure ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard
+gem "jwt"
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 
