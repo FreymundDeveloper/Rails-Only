@@ -2,8 +2,12 @@ class KindsController < ApplicationController
   # include ActionController::HttpAuthentication::Basic::ControllerMethods
   # http_basic_authenticate_with name: "fd", password: "secret"
 
-  include ActionController::HttpAuthentication::Digest::ControllerMethods
-  USERS = { "fd" => Digest::MD5.hexdigest(["fd","Application","secret"].join(":")) }
+  TOKEN = "secret1"
+
+  # include ActionController::HttpAuthentication::Digest::ControllerMethods
+  # USERS = { "fd" => Digest::MD5.hexdigest(["fd","Application","secret"].join(":")) }
+
+  include ActionController::HttpAuthentication::Token::ControllerMethods
 
   before_action :authenticate
   before_action :set_kind, only: %i[ show update destroy ]
@@ -62,8 +66,15 @@ class KindsController < ApplicationController
     end
 
     def authenticate 
-      authenticate_or_request_with_http_digest("Application") do |username|
-        USERS[username]
+      # authenticate_or_request_with_http_digest("Application") do |username|
+      #   USERS[username]
+      # end
+
+      authenticate_or_request_with_http_token do |token, options|
+        ActiveSupport::SecurityUtils.secure_compare(
+          ::Digest::SHA256.hexdigest(token),
+          ::Digest::SHA256.hexdigest(TOKEN)
+        )
       end
     end
 end
