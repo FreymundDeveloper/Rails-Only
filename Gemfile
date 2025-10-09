@@ -22,6 +22,12 @@ gem 'devise_token_auth'
 # A plugin for versioning Rails based RESTful APIs.
 gem 'versionist', '~> 1.5.0'
 
+# A Scope & Engine based, clean, powerful, customizable and sophisticated paginator for Ruby webapps
+gem 'kaminari'
+
+# Link header pagination for Rails and Grape APIs.
+gem 'api-pagination'
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 
