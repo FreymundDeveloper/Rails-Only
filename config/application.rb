@@ -24,5 +24,9 @@ module RailsOnly
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     #config.i18n.default_locale = :'pt-BR'
+
+    # Not recommended, but resolves session dependencies
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
   end
 end

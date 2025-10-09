@@ -1,4 +1,6 @@
 class KindsController < ApplicationController
+  before_action :authenticate_user!
+
   # include ActionController::HttpAuthentication::Basic::ControllerMethods
   # http_basic_authenticate_with name: "fd", password: "secret"
 
@@ -7,9 +9,10 @@ class KindsController < ApplicationController
   # include ActionController::HttpAuthentication::Digest::ControllerMethods
   # USERS = { "fd" => Digest::MD5.hexdigest(["fd","Application","secret"].join(":")) }
 
-  include ActionController::HttpAuthentication::Token::ControllerMethods
+  # include ActionController::HttpAuthentication::Token::ControllerMethods
 
-  before_action :authenticate
+  # before_action :authenticateLocalJwt
+  
   before_action :set_kind, only: %i[ show update destroy ]
 
   # GET /kinds
@@ -65,7 +68,7 @@ class KindsController < ApplicationController
       params.require(:kind).permit(:description)
     end
 
-    def authenticate 
+    def authenticateLocalJwt 
       # authenticate_or_request_with_http_digest("Application") do |username|
       #   USERS[username]
       # end
@@ -74,7 +77,7 @@ class KindsController < ApplicationController
         hmac_secret = "my$ecretK3y"
 
         JWT.decode token, hmac_secret, true, { :algorithm => "HS256" }
-        
+
         #ActiveSupport::SecurityUtils.secure_compare(
         #  ::Digest::SHA256.hexdigest(token),
         #  ::Digest::SHA256.hexdigest(TOKEN)

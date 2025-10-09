@@ -16,6 +16,9 @@ gem "puma", "~> 5.0"
 # A pure ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard
 gem "jwt"
 
+# Token based authentication for Rails JSON APIs. Designed to work with jToker and ng-token-auth.
+gem 'devise_token_auth'
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 
