@@ -19,6 +19,9 @@ gem "jwt"
 # Token based authentication for Rails JSON APIs. Designed to work with jToker and ng-token-auth.
 gem 'devise_token_auth'
 
+# A plugin for versioning Rails based RESTful APIs.
+gem 'versionist', '~> 1.5.0'
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 
