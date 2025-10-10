@@ -35,3 +35,8 @@ You need to perform the "bundle install" manually in the container terminal(in a
 
 In situations where the containers are no longer recognizing the Gems, it is necessary to rebuild the compose and run the following command at the end: 
 docker-compose exec web rails db:drop db:create db:migrate dev:setup
+
+RSpec command order: 
+- 1: Migrate the DB: docker-compose exec web rails db:migrate RAILS_ENV=test
+- 2: Build the DB structure: docker-compose exec web rails dev:setup RAILS_ENV=test
+- 3: Run the Tests: docker-compose exec web bundle exec rspec
