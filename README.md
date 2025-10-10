@@ -1,42 +1,73 @@
-# README
+# Rails-Only
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Repository used to build and test APIs based on Rails API-Only, with a test system in RSpec and using a Linux ambience configured and built through Docker.
 
-Things you may want to cover:
+Some tecnologies used:
 
-* Ruby version
+* Ruby(3.2.x);
+* Ruby on Rails(7.0.x);
+* API Restful;
+* MySQL;
+* RSpec.
+* Docker.
 
-* System dependencies
+## Running the Linux Ambience
 
-* Configuration
+As mentioned previously, this entire application runs in a standalone Linux ambience designed in Docker. To build the project, first install and open Docker on your machine, then run the following command sequence in order:
 
-* Database creation
+```bash
+# Build the Linux ambience for the project
 
-* Database initialization
+# The dockerfile is configured to generate a container with the Linux ambience for Ruby on Rails, one...
+# with a MySql database and one with a Redis server (This Last is mandatory for Rails to work).
+$ docker-compose up --build
 
-* How to run the test suite
+# Open your docker container's terminal and install Curl
+$ apt-get install curl
 
-* Services (job queues, cache servers, search engines, etc.)
+# You need to perform the "bundle install" manually in the container terminal(in addition to the editor terminal)
+$ docker-compose run web bundle install
+# Open your container's Curl to access the local terminal
+$ docker-compose exec web /bin/bash
+# Run installation Command again on Curl
+$ bundle install
 
-* Deployment instructions
+# Build the project database
+$ docker-compose exec web rails db:drop db:create db:migrate dev:setup
+```
 
-* ...
+**Obs**: To use commands in the application, start them all with the excerpt below:
 
-**For documentation**
+```bash
+# Docker project command
+$ docker-compose exec web rails <"command">
+```
 
-docker-compose up --build
+## Running the RSpec Tests
 
-docker-compose exec web rails <"command">
+For the unit tests, it is necessary to create a database in the testing ambience, follow the commands below in order:
 
-In the container, install apt-get install curl
+```bash
+# Perform database migration
+$ docker-compose exec web rails db:migrate RAILS_ENV=test
 
-You need to perform the "bundle install" manually in the container terminal(in addition to the editor terminal), use: "docker-compose exec web /bin/bash"
+# Build the database structure
+$ docker-compose exec web rails dev:setup RAILS_ENV=test
 
-In situations where the containers are no longer recognizing the Gems, it is necessary to rebuild the compose and run the following command at the end: 
-docker-compose exec web rails db:drop db:create db:migrate dev:setup
+# Run the Tests
+$ docker-compose exec web bundle exec rspec
+```
 
-RSpec command order: 
-- 1: Migrate the DB: docker-compose exec web rails db:migrate RAILS_ENV=test
-- 2: Build the DB structure: docker-compose exec web rails dev:setup RAILS_ENV=test
-- 3: Run the Tests: docker-compose exec web bundle exec rspec
+## Miscellaneous
+
+* In situations where the containers are no longer recognizing the Gems, it is necessary to rebuild the compose and run the following commands at the end: 
+
+```bash
+# End and rebuild the Docker ambience
+$ docker-compose down -v docker-compose up --build
+
+# Restart the database 
+$ docker-compose exec web rails db:drop db:create db:migrate dev:setup
+```
+
+* The Docker ambience configuration is not so good, it is normal to find "REMAINS" of Images and Containers that are no longer used.
