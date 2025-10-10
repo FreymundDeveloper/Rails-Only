@@ -1,5 +1,7 @@
 require_relative "boot"
 
+require_relative '../lib/app_name'
+
 require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
@@ -24,6 +26,9 @@ module RailsOnly
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     #config.i18n.default_locale = :'pt-BR'
+
+    # autoload / lib
+    config.autoload_paths << Rails.root.join("lib")
 
     # Not recommended, but resolves session dependencies
     config.middleware.use ActionDispatch::Cookies
