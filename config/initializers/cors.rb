@@ -15,4 +15,6 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
    end
 end
 
-Rails.application.config.middleware.use AppName, "Api Working!"
+unless Rails.env.test?
+  Rails.application.config.middleware.use AppName, "Api Working!"
+end
