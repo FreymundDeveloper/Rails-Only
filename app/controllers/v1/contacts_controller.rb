@@ -11,7 +11,10 @@ module V1
 
       @contacts = Contact.all.page(params[:page].try(:[], :number))
 
-      render json: @contacts, include: [:kind, :phones, :address], methods: :i18n_default
+      # expires_in 30.seconds, public: true
+      if stale?(last_modified: @contacts[0].updated_at)
+        render json: @contacts, include: [:kind, :phones, :address], methods: :i18n_default
+      end
     end
 
     # GET /contacts/1
