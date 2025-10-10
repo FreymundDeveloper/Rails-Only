@@ -19,7 +19,7 @@ module V1
 
     # GET /contacts/1
     def show
-      render json: @contact.to_locale, include: [:kind, :phones, :address] #, meta: { author: "FD" }
+      render json: @contact #.to_locale, include: [:kind, :phones, :address] #, meta: { author: "FD" }
     end
 
     # POST /contacts

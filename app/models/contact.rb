@@ -1,6 +1,6 @@
 class Contact < ApplicationRecord
     validates_presence_of :kind
-    validates_presence_of :address
+    # validates_presence_of :address
 
     paginates_per 5
 
